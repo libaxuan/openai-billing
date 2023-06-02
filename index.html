@@ -4,7 +4,7 @@
 <head>
     <script>
         var _hmt = _hmt || [];
-        (function() {
+        (function () {
             var hm = document.createElement("script");
             hm.src = "https://hm.baidu.com/hm.js?9b20ea79900c6a7ceab41cf191b7f3b5";
             var s = document.getElementsByTagName("script")[0];
@@ -12,10 +12,10 @@
         })();
     </script>
 
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <link rel="icon"
-          href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNGRjQ1MDAiIC8+PC9zdmc+Cg==" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNGRjQ1MDAiIC8+PC9zdmc+Cg=="/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>查询 OpenAI API 余额</title>
     <meta name="description"
           content="A quick and easy way to check OpenAI API Key balances, supports multiple key checks.一个快速简便的方式来查询 OpenAI API Key 余额，支持多个 Key 的查询">
@@ -164,7 +164,7 @@
             line-height: inherit;
             cursor: pointer;
             user-select: none;
-            transition: border .3s, background .3s ;
+            transition: border .3s, background .3s;
         }
 
         button:hover {
@@ -256,14 +256,12 @@
         }
 
 
-
         /* 隐藏自定义API链接输入框 */
         input#custom-url-input {
             display: none;
             height: 50px;
             /* 添加高度 */
         }
-
 
 
         /* 下面的代码定义了结果表格的样式 */
@@ -364,7 +362,6 @@
 <h2>选择查询线路</h2>
 <p>支持自定义线路，官网线路需要魔法</p>
 <select id="api-url-select">
-<!--    <option value="https://dailytopaapi.eu.org">【vercel】dailytopaapi.eu.org</option>-->
     <option value="https://api.askgptai.tech">【CloudFlare】api.askgptai.tech</option>
     <option value="https://openai.1rmb.tk">【社区反代】openai.1rmb.tk</option>
     <option value="https://api.openai.com">【官网线路】api.openai.com</option>
@@ -372,9 +369,10 @@
 </select>
 
 <!-- 自定义API链接输入框 -->
-<input type="text" id="custom-url-input" placeholder="输入自定义API，默认使用 https 协议" />
+<input type="text" id="custom-url-input" placeholder="输入自定义API，默认使用 https 协议"/>
 </div>
-<button :class="{ loading }" :disabled="loading" onclick="sendRequest()">查询</button> </p>
+<button :class="{ loading }" :disabled="loading" onclick="sendRequest()">查询</button>
+</p>
 
 <h2 id="result-head" style="visibility:hidden">查询结果</h2>
 <table id="result-table" style="visibility:hidden">
@@ -423,7 +421,7 @@
 
         try {
             // 获取API限额
-            let response = await fetch(urlsubscription, { headers });
+            let response = await fetch(urlsubscription, {headers});
             if (!response.ok) {
                 console.log("APIKEY 错误或账号被封，请登录 OpenAI 查看。");
                 return;
@@ -435,7 +433,7 @@
             const expiryDate = new Date(subscriptionData.access_until * 1000 + 8 * 60 * 60 * 1000);
             const formattedDate = `${expiryDate.getFullYear()}-${(expiryDate.getMonth() + 1).toString().padStart(2, '0')}-${expiryDate.getDate().toString().padStart(2, '0')}`;
 
-            const gpt4CheckResponse = await fetch(gpt4Check, { headers });
+            const gpt4CheckResponse = await fetch(gpt4Check, {headers});
             const gpt4CheckData = await gpt4CheckResponse.json();
             let GPT4CheckResult = Array.isArray(gpt4CheckData.data) && gpt4CheckData.data.some(item => item.id.includes('gpt-4')) ? '✅' : '❌';
             let isSubscrible = subscriptionData.plan.id.includes('payg') ? '🟢' : '🔴';
@@ -443,11 +441,11 @@
             if (totalAmount > 20) {
                 startDate = subDate;
                 urlUsage = `${apiUrl}/v1/dashboard/billing/usage?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}`;
-                response = await fetch(urlUsage, { headers });
+                response = await fetch(urlUsage, {headers});
                 const usageData = await response.json();
             }
 
-            response = await fetch(urlUsage, { headers });
+            response = await fetch(urlUsage, {headers});
             const usageData = await response.json();
             const totalUsage = usageData.total_usage / 100;
             let remaining;
